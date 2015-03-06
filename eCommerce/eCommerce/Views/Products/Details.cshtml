@@ -1,38 +1,44 @@
-﻿
+﻿@model eCommerce.Models.Product
 @*dont forget to declare the view's model on the first line!*@
 @{
-    ViewBag.Title = "product name should go here";
+    ViewBag.Title = Model.Name;
 }
 
 <div class="row">
     <div class="col-md-8 product-details">
-        <h2>Product Name</h2>
+        <h2>@Model.Name</h2>
         <p>
-            Product Description
+            @Model.Description
         </p>
         <p>
-            MSRP: <s>MSRP Price, formatted as currency</s>
+            MSRP: <s>@Model.MSRP.ToString("C")</s>
             <br/>
-            Our Price: <span class="price">Price, formatted as currency</span>
+            Our Price: <span class="price">@Model.UnitPrice.ToString("C")</span>
             
             @*if our price is less than the msrp price, display the following*@
-                <div>You save <span class="price">%savings ((unit price / msrp) * 100, round to 2 decimal points)%</span></div>
-            
+            @if (Model.UnitPrice < Model.MSRP)
+            {
+               
+                <div>You save <span class="price"></span>@(Math.Round(((1-(Model.UnitPrice / Model.MSRP))*100), 2).ToString() + " %")</div>
+            }
         </p>
     </div>
     <div class="col-md-4 product-images">
-        <img class="img-rounded main-image" src="the first image in product images url" />
+        <img class="img-rounded main-image" src="@Model.ProductImages.First().imageURL" />
         <div class="thumbnails text-center">
             @*for each product image for the product....*@
+            @foreach (eCommerce.Models.ProductImage image in Model.ProductImages)
+            {
                 <div class="thumbnail">
-                    <img src="url of the image" />
+                    <img src="@image.imageURL" />
                 </div>
+            }
             
         </div>
     </div>
 </div>
 <div>
     @*link to go back to the main products list*@
-    <a href="#" class="btn btn-default">Back to Products</a>
+    <a href="@Url.Action("Index", "Products")" class="btn btn-default">Back to Products</a>
 </div>
 
