@@ -24,7 +24,7 @@
         </p>
     </div>
     <div class="col-md-4 product-images">
-        <img class="img-rounded main-image" src="@Model.ProductImages.First().imageURL" />
+        <img class="img-rounded main-image" height="267px" width="auto" src="@Model.ProductImages.First().imageURL" />
         <div class="thumbnails text-center">
             @*for each product image for the product....*@
             @foreach (eCommerce.Models.ProductImage image in Model.ProductImages)
